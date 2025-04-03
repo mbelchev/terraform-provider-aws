@@ -151,6 +151,11 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			},
 		},
 		{
+			Factory:  ResourceQueueQuickConnectAssociation,
+			TypeName: "aws_connect_queue_quick_connect_association",
+			Name:     "Queue Quick Connect association",
+		},
+		{
 			Factory:  ResourceQuickConnect,
 			TypeName: "aws_connect_quick_connect",
 			Name:     "Quick Connect",

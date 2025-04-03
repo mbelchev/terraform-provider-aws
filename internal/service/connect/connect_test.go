@@ -91,6 +91,10 @@ func TestAccConnect_serial(t *testing.T) {
 			"dataSource_id":        testAccQueueDataSource_queueID,
 			"dataSource_name":      testAccQueueDataSource_name,
 		},
+		"QueueQuickConnectAssociation": {
+			"basic":      testAccQueueQuickConnectAssociation_basic,
+			"dissapears": testAccQueueQuickConnectAssociation_disappears,
+		},
 		"QuickConnect": {
 			"basic":           testAccQuickConnect_phoneNumber,
 			"disappears":      testAccQuickConnect_disappears,

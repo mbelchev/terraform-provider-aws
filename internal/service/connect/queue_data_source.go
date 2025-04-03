@@ -75,6 +75,14 @@ func DataSourceQueue() *schema.Resource {
 				Computed:     true,
 				ExactlyOneOf: []string{"queue_id", "name"},
 			},
+			"quick_connect_ids": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Computed: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
 			"status": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -132,6 +140,12 @@ func dataSourceQueueRead(ctx context.Context, d *schema.ResourceData, meta inter
 	d.Set("name", queue.Name)
 	d.Set("queue_id", queue.QueueId)
 	d.Set("status", queue.Status)
+
+	queueQuickConnects, err := GetQueueQuickConnectIDs(ctx, conn, instanceID, aws.StringValue(queue.QueueId))
+
+	if err := d.Set("quick_connect_ids", queueQuickConnects); err != nil {
+		return sdkdiag.AppendErrorf(diags, "setting quick_connect_ids: %s", err)
+	}
 
 	if err := d.Set("outbound_caller_config", flattenOutboundCallerConfig(queue.OutboundCallerConfig)); err != nil {
 		return sdkdiag.AppendErrorf(diags, "setting outbound_caller_config: %s", err)
